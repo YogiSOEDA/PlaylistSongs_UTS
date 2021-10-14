@@ -24,17 +24,21 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
     $router->get('/songs', 'SongController@getAllSong');
     #To Get Song By Id
     $router->get('/songs/{id}', 'SongController@getSongById');
-    #To Insert Song
-    $router->post('/songs', 'SongController@createSong');
-    #To Update Song
-    $router->put('/songs/{id}', 'SongController@updateSong');
-    #To Delete Song
-    $router->delete('/songs/{id}', 'SongController@deleteSong');
 
-    #To Get All Users
-    $router->get('/users', 'UserController@getAllUser');
-    #To Get User By Id
-    $router->get('/users/{id}', 'UserController@getUserById');
-    #To Insert User
-    $router->post('/users', 'UserController@createUser');
+
+    $router->group(['middleware' => 'pbe.superuser'], function ($router) {
+        #To Get All Users
+        $router->get('/users', 'UserController@getAllUser');
+        #To Get User By Id
+        $router->get('/users/{id}', 'UserController@getUserById');
+        #To Insert User
+        $router->post('/users', 'UserController@createUser');
+
+        #To Insert Song
+        $router->post('/songs', 'SongController@createSong');
+        #To Update Song
+        $router->put('/songs/{id}', 'SongController@updateSong');
+        #To Delete Song
+        $router->delete('/songs/{id}', 'SongController@deleteSong');
+    });
 });

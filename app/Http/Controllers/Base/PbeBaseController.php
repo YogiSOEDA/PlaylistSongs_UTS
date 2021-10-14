@@ -10,11 +10,6 @@ abstract class PbeBaseController extends BaseController
 {
     public function __construct()
     {
-        $token = request()->header('token');
-        $user = User::where('token', '=', $token)->first();
-        if ($user == null){
-            throw new PbeNotAuthenticatedException();
-        }
     }
 
     protected function successResponse(array $data, int $httpCode = 200)

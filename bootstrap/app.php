@@ -78,6 +78,7 @@ $app->configure('app');
 
 $app->routeMiddleware([
     'pbe.auth' => App\Http\Middleware\PbeMiddleware::class,
+    'pbe.superuser' => App\Http\Middleware\SuperuserMiddleware::class,
 ]);
 
 /*
