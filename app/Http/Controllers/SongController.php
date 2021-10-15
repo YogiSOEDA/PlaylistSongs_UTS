@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\PbeBaseController;
+use App\Models\Playlistsong;
 use App\Models\Song;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
@@ -87,7 +88,11 @@ class SongController extends PbeBaseController
         if($song == null){
             throw new NotFoundHttpException();
         }
-        $song->delete();
-        return $this->successResponse(['song'=>'Data berhasil dihapus']);
+        $songs = Playlistsong::where('song_id','=',$id)->first();
+        if($songs == null){
+            $song->delete();
+            return $this->successResponse(['song'=>'Data berhasil dihapus']);
+        }
+        return $this->failResponse(['Data telah digunakan'],400);
     }
 }

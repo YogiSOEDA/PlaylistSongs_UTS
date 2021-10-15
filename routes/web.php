@@ -25,6 +25,15 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
     #To Get Song By Id
     $router->get('/songs/{id}', 'SongController@getSongById');
 
+    $router->post('/playlists', 'PlaylistController@createPlaylist');
+
+    $router->get('/playlists', 'PlaylistController@getOwnPlaylist');
+
+    $router->get('/playlists/{id}', 'PlaylistController@getMyPlaylist');
+
+    $router->post('/playlists/{id}/songs', 'PlaylistController@insertSongPlaylist');
+
+    $router->get('/playlists/{id}/songs', 'PlaylistController@getPlaylistSong');
 
     $router->group(['middleware' => 'pbe.superuser'], function ($router) {
         #To Get All Users
@@ -40,5 +49,9 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
         $router->put('/songs/{id}', 'SongController@updateSong');
         #To Delete Song
         $router->delete('/songs/{id}', 'SongController@deleteSong');
+
+        $router->get('/users/{id}/playlists', 'UserController@getUserPlaylist');
+
+        $router->get('/users/{id}/playlists/{playlistid}/songs', 'UserController@getUserPlaylistSong');
     });
 });
